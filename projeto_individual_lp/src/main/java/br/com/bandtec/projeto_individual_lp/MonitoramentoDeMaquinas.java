@@ -13,7 +13,21 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Aluno
  */
 public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
-
+        Integer valorMaximoCpu = 0;
+        Integer valorMinimoCpu = 100;
+        
+        Integer valorMaximoDisco = 0;
+        Integer valorMinimoDisco = 250;
+        
+        Integer valorMaximoMemoria = 0;
+        Integer valorMinimoMemoria = 8 * 1024;
+        
+         Integer somaCpu= 0 ;
+         Integer somaDisco= 0 ;
+         Integer somaMemoria= 0 ;
+           
+        
+        Integer leitura = 0;
     /**
      * Creates new form MonitoramentoDeMaquinas
      */
@@ -59,15 +73,9 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pbDado2.setMaximum(95);
-        pbDado2.setMinimum(1);
-        pbDado2.setValue(0);
+        pbDado2.setMaximum(250);
 
-        pbDado1.setMaximum(90);
-        pbDado1.setValue(0);
-
-        pbDado3.setMinimum(1);
-        pbDado3.setValue(0);
+        pbDado3.setMaximum(8192);
 
         lbTexto1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbTexto1.setText("CPU");
@@ -90,23 +98,23 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Monitoramento de recursos");
 
-        jLabel2.setText("Máximo CPU");
+        jLabel2.setText("Máximo CPU:");
 
-        jLabel3.setText("Médio CPU");
+        jLabel3.setText("Médio CPU:");
 
-        jLabel4.setText("Minimo CPU");
+        jLabel4.setText("Minimo CPU:");
 
-        jLabel5.setText("Máximo Disco");
+        jLabel5.setText("Máximo Disco:");
 
-        jLabel6.setText("Médio Disco");
+        jLabel6.setText("Médio Disco:");
 
-        jLabel7.setText("Minimo Disco");
+        jLabel7.setText("Minimo Disco:");
 
-        jLabel8.setText("Máximo Memória");
+        jLabel8.setText("Máximo Memória:");
 
-        jLabel9.setText("Médio Memória");
+        jLabel9.setText("Médio Memória:");
 
-        jLabel10.setText("Minimo Memória");
+        jLabel10.setText("Minimo Memória:");
 
         jbMaximoCpu.setText("0%");
 
@@ -114,17 +122,17 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
 
         jbMinimoCpu.setText("0%");
 
-        jbMaximoDisco.setText("0%");
+        jbMaximoDisco.setText("0");
 
-        jbMedioDisco.setText("0%");
+        jbMedioDisco.setText("0");
 
-        jbMinimoDisco.setText("0%");
+        jbMinimoDisco.setText("0");
 
-        jbMaximoMemoria.setText("0%");
+        jbMaximoMemoria.setText("0");
 
-        jbMedioMemoria.setText("0%");
+        jbMedioMemoria.setText("0");
 
-        jbMinimoMemoria.setText("0%");
+        jbMinimoMemoria.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,24 +146,13 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbMedioCpu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbMedioDisco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(151, 151, 151)
-                        .addComponent(jbMedioMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lbTexto1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(pbDado1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(pbDado2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                                     .addComponent(lbTexto2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -165,39 +162,55 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
                                     .addComponent(lbTexto3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(34, 34, 34))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbMaximoCpu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jbMaximoCpu))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbMinimoCpu, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(54, 54, 54)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jbMinimoCpu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jbMaximoDisco, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jbMinimoDisco, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel8))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(11, 11, 11)))
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jbMedioCpu)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(jbMaximoMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jbMinimoMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jbMaximoDisco))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(jbMinimoDisco, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbMedioDisco)))
+                        .addGap(69, 69, 69)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbMinimoMemoria)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbMedioMemoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addComponent(jbMaximoMemoria)
+                        .addGap(56, 56, 56))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,57 +231,51 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jbMaximoCpu))
-                    .addComponent(jLabel5)
-                    .addComponent(jbMaximoDisco)
-                    .addComponent(jLabel8)
-                    .addComponent(jbMaximoMemoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jbMaximoCpu))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jbMaximoDisco)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jbMedioCpu)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jbMedioDisco))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(jbMinimoCpu)
+                                .addComponent(jbMinimoDisco))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jbMaximoMemoria))
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jbMedioCpu)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jbMedioDisco)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
-                        .addComponent(jbMedioMemoria)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jbMinimoCpu))
-                    .addComponent(jbMinimoDisco)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbMinimoMemoria)
-                        .addComponent(jLabel10)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                            .addComponent(jLabel9)
+                            .addComponent(jbMedioMemoria))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbMinimoMemoria)
+                            .addComponent(jLabel10))))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
  
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        Integer valorMaximoCpu = 90;
-        Integer valorMedioCpu;
-        Integer valorMinimoCpu = 10;
-        
-        Integer valorMaximoDisco = 95;
-        Integer valorMedioDisco;
-        Integer valorMinimoDisco = 15;
-        
-        Integer valorMaximoMemoria = 90;
-        Integer valorMedioMemoria;
-        Integer valorMinimoMemoria = 10;
         
         pbDado1.setStringPainted(true);
         pbDado1.setForeground(Color.BLACK);
@@ -279,10 +286,11 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
         pbDado3.setStringPainted(true);
         pbDado3.setForeground(Color.BLACK);
         
+        leitura++;
         
-        Integer cpu = ThreadLocalRandom.current().nextInt(0, 90);
-        Integer disco = ThreadLocalRandom.current().nextInt(0, 95);
-        Integer memoria = ThreadLocalRandom.current().nextInt(0, 100);
+        Integer cpu = ThreadLocalRandom.current().nextInt(0, 101);
+        Integer disco = ThreadLocalRandom.current().nextInt(0, 251);
+        Integer memoria = ThreadLocalRandom.current().nextInt(0, 8193);
         
         
         pbDado1.setValue(cpu);
@@ -290,42 +298,44 @@ public class MonitoramentoDeMaquinas extends javax.swing.JFrame {
         pbDado3.setValue(memoria);
         
         pbDado1.setString(String.format("%d%%",pbDado1.getValue()));
-        pbDado2.setString(String.format("%d%%",pbDado2.getValue()));
-        pbDado3.setString(String.format("%d%%",pbDado3.getValue()));
+        pbDado2.setString(String.format("%d GB",pbDado2.getValue()));
+        pbDado3.setString(String.format("%d MB",pbDado3.getValue()));
         
-        if (pbDado1.getValue() > valorMinimoCpu) {
-            valorMaximoCpu = pbDado1.getValue();
-            jbMaximoCpu.setText(valorMaximoCpu.toString() + "%");
-            valorMedioCpu = (valorMaximoCpu+valorMinimoCpu)/2;
-            jbMedioCpu.setText(valorMedioCpu.toString() + "%");
-        }else{
-            valorMinimoCpu = pbDado1.getValue();
+
+        if (cpu < valorMinimoCpu) {
+            valorMinimoCpu = cpu;
             jbMinimoCpu.setText(valorMinimoCpu.toString() + "%");
         }
-        
-       
-        
-        if (pbDado2.getValue() > valorMinimoDisco) {
-            valorMaximoDisco = pbDado2.getValue();
-            jbMaximoDisco.setText(valorMaximoDisco.toString() + "%");
-            valorMedioDisco = (valorMaximoDisco+valorMinimoDisco)/2;
-            jbMedioDisco.setText(valorMedioDisco.toString() + "%");
-        }else{
-            valorMinimoDisco = pbDado2.getValue();
-            jbMinimoDisco.setText(valorMinimoDisco.toString() + "%");
+          if (disco < valorMinimoDisco) {
+            valorMinimoDisco = disco;
+            jbMinimoDisco.setText(valorMinimoDisco.toString() + "GB");
         }
-        
-         if (pbDado3.getValue() > valorMinimoMemoria) {
-            valorMaximoMemoria = pbDado3.getValue();
-            jbMaximoMemoria.setText(valorMaximoMemoria.toString() + "%");
-            valorMedioMemoria = (valorMaximoMemoria+valorMinimoMemoria)/2;
-            jbMedioMemoria.setText(valorMedioMemoria.toString() + "%");
-        }else{
-            valorMinimoMemoria = pbDado3.getValue();
-            jbMinimoMemoria.setText(valorMinimoMemoria.toString() + "%");
+          if (memoria < valorMinimoMemoria) {
+            valorMinimoMemoria = memoria;
+            jbMinimoMemoria.setText(valorMinimoMemoria.toString() + "MB");
         }
+          
+         if (cpu > valorMaximoCpu) {
+          valorMaximoCpu = cpu;
+         jbMaximoCpu.setText(valorMaximoCpu.toString() + "%");
+        }
+          if (disco > valorMaximoDisco) {
+            valorMaximoDisco = disco;
+            jbMaximoDisco.setText(valorMaximoDisco.toString() + "GB");
+        }
+          if (memoria > valorMaximoMemoria) {
+            valorMaximoMemoria = memoria;
+            jbMaximoMemoria.setText(valorMaximoMemoria.toString() + "MB");
+        }
+          
+        somaCpu += cpu;
+        somaDisco += disco;
+        somaMemoria += memoria; 
         
-        
+        jbMedioCpu.setText(String.format("%.2f%%", (somaCpu/leitura.doubleValue())));
+        jbMedioDisco.setText(String.format("%.2fGB", (somaDisco/leitura.doubleValue())));
+        jbMedioMemoria.setText(String.format("%.2fMB", (somaMemoria/leitura.doubleValue())));
+          
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
